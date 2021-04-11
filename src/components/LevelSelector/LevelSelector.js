@@ -7,10 +7,12 @@ const LevelSelector = ({ setFileId, setNumberOfCards }) => {
   const selectLevelHandler = (lvl) => {
     axios.get(`${baseUrl}/${selectLevel}/${lvl}`).then((res) => {
       let data = res.data;
-      console.log(data);
+      console.log(res);
+     if(data){
       setFileId(data.file_id);
       setNumberOfCards(data.number_of_cards);
-    });
+     }
+    }).catch(err=>console.log(err));
   };
 
   return (
