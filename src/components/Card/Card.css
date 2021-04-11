@@ -1,0 +1,20 @@
+.deck-card{
+    display: inline-block;
+    height: 100px;
+    width: 75px;
+    border: 1px solid #b10000;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    position: relative;
+}
+
+.card-value{
+    position: absolute;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
