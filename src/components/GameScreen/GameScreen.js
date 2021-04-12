@@ -39,7 +39,7 @@ const GameScreen = ({ fileId, numberOfCards, setFileId, setNumberOfCards }) => {
 
   const selectDeckCard = (idx, deckName) => {
     if (deckName === "deck1" && deck1SelectedCard) return;
-    if (deckName === "deck2" && deck2SelectedCard) return;
+    if (deckName === "deck2" && (deck2SelectedCard || !deck1SelectedCard)) return;
     axios
       .post(`${baseUrl}/${selectCard}`, {
         file_id: fileId,
