@@ -6,7 +6,6 @@ import { baseUrl, selectCard, checkMatched } from "../../config/api";
 
 const GameScreen = ({ fileId, numberOfCards, setFileId, setNumberOfCards }) => {
   const generateDeck = (name) => {
-    console.log(name, numberOfCards);
     let deck = [];
     for (var i = 1; i <= numberOfCards; i++) {
       let card = {
@@ -26,7 +25,17 @@ const GameScreen = ({ fileId, numberOfCards, setFileId, setNumberOfCards }) => {
   const [deck2SelectedCard, setDeck2SelectedCard] = useState(null);
   const [errorScore, setErrorScore] = useState(0);
   const [matchedCard, setMatchedCard] = useState(0);
+  const [time, setTime] = useState(0);
 
+  let sec = 0;
+  const timer = () => {
+    sec = sec + 1;
+    setTime(sec);
+    console.log(sec);
+  };
+  useEffect(() => {
+    setInterval(timer, 1000);
+  }, []);
 
   const selectDeckCard = (idx, deckName) => {
     if (deckName === "deck1" && deck1SelectedCard) return;
@@ -103,40 +112,45 @@ const GameScreen = ({ fileId, numberOfCards, setFileId, setNumberOfCards }) => {
       {matchedCard === numberOfCards ? (
         <div className="game-over">
           <div className="display-4 font-weight-bold text-white">Game Over</div>
-          <span className="btn btn-light px-5 mt-3 " onClick={()=>{
-            setFileId(null)
-            setNumberOfCards(null)
-          }}>Restart</span>
+          <span
+            className="btn btn-light px-5 mt-3 "
+            onClick={() => {
+              setFileId(null);
+              setNumberOfCards(null);
+            }}
+          >
+            Restart
+          </span>
         </div>
-      ):
-      <div className="container">
-      <div className="mt-3 px-3 ">
-        <span className="bg-dark text-light rounded-pill px-3 py-2">
-          Elapsed Time: 20sec
-        </span>
-        <span className="float-right bg-dark text-light rounded-pill px-3 py-2">
-          Error score: {errorScore}
-        </span>
-      </div>
-      <div className="mt-5 text-white">
-        <h5>Deck 1</h5>
-        <div className="">
-          {deck1.map((item) => (
-            <Card card={item} deck="deck1" OnClick={selectDeckCard} />
-          ))}
+      ) : (
+        <div className="container">
+          <div className="mt-3 px-3 ">
+            <span className="bg-dark text-light rounded-pill px-3 py-2">
+              Elapsed Time: {time} sec
+            </span>
+            <span className="float-right bg-dark text-light rounded-pill px-3 py-2">
+              Error score: {errorScore}
+            </span>
+          </div>
+          <div className="mt-5 text-white">
+            <h5>Deck 1</h5>
+            <div className="">
+              {deck1.map((item) => (
+                <Card card={item} deck="deck1" OnClick={selectDeckCard} />
+              ))}
+            </div>
+          </div>
+          <div className="mt-5 text-white ">
+            <h5>Deck 2</h5>
+            <div className="">
+              {deck2.map((item) => (
+                <Card card={item} deck="deck2" OnClick={selectDeckCard} />
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="mt-5 text-white ">
-        <h5>Deck 2</h5>
-        <div className="">
-          {deck2.map((item) => (
-            <Card card={item} deck="deck2" OnClick={selectDeckCard} />
-          ))}
-        </div>
-      </div>
-    </div>
-}
-   </>
+      )}
+    </>
   );
 };
 
